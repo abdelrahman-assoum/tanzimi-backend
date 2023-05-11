@@ -1,11 +1,12 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
-import connectDB from './config/db';
-
-connectDB();
+import connectDB from './config/db.js';
 
 dotenv.config();
+
+await connectDB();
+
 
 const PORT = process.env.PORT || 5000;
 

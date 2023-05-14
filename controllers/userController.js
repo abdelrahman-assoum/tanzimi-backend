@@ -21,6 +21,7 @@ export const getUserById = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id);
     res.status(200).json(user);
+    if(!user) return res.status(404).json({error: 'User not found'});
   } catch (err) {
     next(err);
     res.status(500).json({ error: err.message });
@@ -85,7 +86,7 @@ export const register = async (req, res, next) => {
       return res.status(400).json({ message: "Invalid User data" });
     }
   } catch (error) {
-    if (req.file.path) {
+    if (req.file) {
       fs.unlinkSync(req.file.path);
     }
     res.json({ error: error });

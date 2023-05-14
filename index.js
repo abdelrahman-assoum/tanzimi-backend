@@ -2,7 +2,7 @@ import express from 'express';
 import morgan from 'morgan';
 import path from "path";
 import UserRoute from './routes/userRoute.js';
-
+import LabelRoute from './routes/labelRoute.js';
 //import and use .env variables
 import dotenv from 'dotenv';
 dotenv.config();
@@ -29,7 +29,8 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-app.use("/users", UserRoute)
+app.use("/users", UserRoute);
+app.use("/label", LabelRoute);
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

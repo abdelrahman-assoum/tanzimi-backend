@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-const {Schema, Model} = mongoose;
+import User from "./userModel.js";
+const { Schema } = mongoose;
 
 const labelSchema = new Schema(
   {
@@ -10,10 +11,10 @@ const labelSchema = new Schema(
     color: {
       type: String,
       required: true,
-      min: 3,
-      max: 6,
+      minLength: 3,
+      maxLength: 6,
     },
-    user_id: {
+    user: {
       type: mongoose.Types.ObjectId,
       ref: "User",
     },
@@ -23,8 +24,9 @@ const labelSchema = new Schema(
   }
 );
 
-labelSchema.pre(["find", "findOne"], function () {
-  this.populate(["user_id"]);
+labelSchema.pre(["find", "findOne", "findOneAndUpdate", "save"], function () {
+  this.populate({ path: "user", model: User, select: "-email -password" }); // Exclude the email and password fields
 });
 
-const Label = Model("Label", labelSchema)
+const Label = mongoose.model("Label", labelSchema);
+export default Label;

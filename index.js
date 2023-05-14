@@ -1,10 +1,14 @@
 import express from 'express';
-import dotenv from 'dotenv';
 import morgan from 'morgan';
-import connectDB from './config/db.js';
+import path from "path";
+import UserRoute from './routes/userRoute.js';
 
+//import and use .env variables
+import dotenv from 'dotenv';
 dotenv.config();
 
+//Connecting to db
+import connectDB from './config/db.js';
 await connectDB();
 
 
@@ -15,11 +19,17 @@ const app = new express();
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
+
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+app.use(express.static("public"));
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
+
+app.use("/users", UserRoute)
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

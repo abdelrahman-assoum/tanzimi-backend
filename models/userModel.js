@@ -1,4 +1,4 @@
-import mongoose, { Collection } from "mongoose";
+import mongoose from "mongoose";
 const {Schema, Model} = mongoose;
 
 
@@ -23,12 +23,13 @@ const userSchema = new Schema({
         type: Number,
         required: true,
     },
+    
     picture: {
         type: String,
         required: true,
     }
 }, {
-       Collection: 'users',
+       collection: 'users',
  });
 
  const User = mongoose.model('User', userSchema);

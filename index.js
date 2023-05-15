@@ -38,12 +38,6 @@ app.use("/tasks", TaskRoute);
 app.use("/goal", GoalRoute);
 
 // error handler
-// app.use(function(err, req, res, next) {
-//    res.status(err.status || 500).send({
-//        success: false,
-//        message: err.message
-//    });
-// });
 app.use(function (req, res, next) {
   next(createError(404));
 });
@@ -56,10 +50,6 @@ app.use((err, req, res, next) => {
     stack: err.stack,
   });
 });
-
-// app.use(function (req, res, next) {
-//   next(createError(404));
-// });
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

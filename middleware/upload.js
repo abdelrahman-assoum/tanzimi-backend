@@ -49,4 +49,4 @@ export const JournalsUpload = multer({
       callback(null, false);
     }
   },
-});
+}); 

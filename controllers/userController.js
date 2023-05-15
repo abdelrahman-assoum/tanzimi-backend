@@ -9,9 +9,10 @@ export const getAllUsers = async (req, res, next) => {
   try {
     const users = await User.find({});
     res.status(200).json(users);
-  } catch (err) {
-    next(err);
-    res.status(500).json({ error: err.message });
+  } catch (error) {
+    if (error) {
+      return res.status(500).json({ error: error.message });
+    }
   }
 };
 
@@ -21,10 +22,11 @@ export const getUserById = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id);
     res.status(200).json(user);
-    if(!user) return res.status(404).json({error: 'User not found'});
-  } catch (err) {
-    next(err);
-    res.status(500).json({ error: err.message });
+    if (!user) return res.status(404).json({ error: "User not found" });
+  } catch (error) {
+    if (error) {
+      return res.status(500).json({ error: error.message });
+    }
   }
 };
 
@@ -162,15 +164,15 @@ export const updateUser = async (req, res) => {
     if (req.body.lastName) updatedFields.lastName = req.body.lastName;
     if (req.body.age) updatedFields.age = req.body.age;
 
-      if (req.file) {
-        updatedFields.picture = req.file.path;
+    if (req.file) {
+      updatedFields.picture = req.file.path;
 
-        // Delete the old picture
-        const user = await User.findById(id);
-        if (user.picture) {
-          fs.unlinkSync(user.picture);
-        }
+      // Delete the old picture
+      const user = await User.findById(id);
+      if (user.picture) {
+        fs.unlinkSync(user.picture);
       }
+    }
     const editUser = { ...req.body, ...updatedFields };
 
     const editedUser = await User.findByIdAndUpdate(

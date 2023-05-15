@@ -3,11 +3,11 @@ import User from "../models/userModel.js";
 import Label from "../models/labelModel.js";
 import mongoose from "mongoose";
 
-export const getTasks = async (req, res, next) => {
+export const getTasks = async (req, res) => {
   try {
     const tasks = await Task.find({});
     if (tasks.length === 0)
-      return res.status(404).json({ message: "No tasks found" });
+      return res.status(404).json({ error: "No tasks found" });
     res.status(200).json(tasks);
   } catch (error) {
     if (error) {
@@ -15,6 +15,30 @@ export const getTasks = async (req, res, next) => {
     }
   }
 };
+export const getTaskById = async (req, res, next) => {
+  try {
+    const task = await Task.findById(req.params.id);
+    res.status(200).json(task);
+    if (!task) return res.status(404).json({ error: "Task not found" });
+  } catch (error) {
+    if (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  }
+};
+export const getUserTasks = async (req, res) => {
+  let user = req.body.user;
+  const userTasks = await Task.find({ user });
+  if (userTasks.length > 0) {
+    res.status(200).json({
+      message: `${userTasks[0].user.firstName} ${userTasks[0].user.lastName} Tasks`,
+      userTasks,
+    });
+  } else {
+    return res.status(404).json({ error: "No Tasks found" });
+  }
+};
+
 
 export const createTask = async (req, res) => {
   try {
@@ -22,7 +46,7 @@ export const createTask = async (req, res) => {
 
     const checkUser = await User.findById(user);
     if (!checkUser) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ error: "User not found" });
     }
 
     // Check if label available
@@ -71,7 +95,7 @@ export const updateTask = async (req, res) => {
         if (req.body.user) {
           const checkUser = await User.findById(req.body.user);
           if (!checkUser) {
-               return res.status(404).json({ message: "User not found" });
+               return res.status(404).json({ error: "User not found" });
           } else {
             updatedFields.user = req.body.user;
           }

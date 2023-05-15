@@ -31,6 +31,26 @@ export const getGoalById = async (req, res) => {
   }
 };
 
+export const getUserGoals = async (req, res) => {
+try {
+    let user = req.body.user;
+    const userGoals = await Goal.find({ user });
+
+    if (userGoals.length > 0) {
+      res.status(200).json({
+        message: `${userGoals[0].user.firstName} ${userGoals[0].user.lastName} Goals`,
+        userGoals,
+      });
+    } else {
+      return res.status(404).json({ error: "No Goals found" });
+    }
+} catch (error) {
+   if (error) {
+     return res.status(500).json({ message: error.message });
+   }
+}
+};
+
 export const createGoal = async (req, res) => {
   try {
     let { name, description, dueDate, tasks, user } = req.body;

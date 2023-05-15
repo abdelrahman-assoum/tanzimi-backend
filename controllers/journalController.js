@@ -15,6 +15,19 @@ export const getJournals = async (req, res) => {
     }
   }
 };
+export const getUserJournals = async (req, res) => {
+  let user = req.body.user;
+  const userJournals = await Journal.find({ user });
+
+  if (userJournals.length > 0) {
+    res.status(200).json({
+      message: `${userJournals[0].user.firstName} ${userJournals[0].user.lastName} Journals`,
+      userJournals,
+    });
+  } else {
+    return res.status(404).json({ error: "No Journals found" });
+  }
+};
 
 export const createJournal = async (req, res) => {
   try {

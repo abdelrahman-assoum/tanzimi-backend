@@ -8,7 +8,7 @@ const goalSchema = new Schema({
     type: String,
     required: true,
   },
-  dueDate: {
+  dueDate:   {
     type: Date,
     required: true,
   },

@@ -91,7 +91,7 @@ export const updateGoal = async (req, res) => {
       });
 
       // check if the labels exist
-      if (checkLabels.length !== req.body.tasks.length) {
+      if (checkTasks.length !== req.body.tasks.length) {
         return res
           .status(404)
           .json({ error: "One of the tasks or all of them not found" });
@@ -102,7 +102,7 @@ export const updateGoal = async (req, res) => {
 
     const editGoal = { ...req.body, ...updatedFields };
 
-    const editedGoal = await Task.findByIdAndUpdate(
+    const editedGoal = await Goal.findByIdAndUpdate(
       id,
       { $set: editGoal },
       { new: true }

@@ -21,14 +21,15 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    age: {
+    phoneNumber: {
       type: Number,
       required: true,
+      minLength: 8,
+      maxLength: 15,
     },
 
     picture: {
       type: String,
-      required: true,
     },
   },
   {

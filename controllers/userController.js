@@ -34,10 +34,10 @@ export const getUserById = async (req, res, next) => {
 
 export const register = async (req, res, next) => {
   try {
-    let { email, password, firstName, lastName, age } = req.body;
+    let { email, password, firstName, lastName, phoneNumber } = req.body;
     let picture = req.file.path;
     // Fields Validation
-    if (!email || !password || !firstName || !lastName || !age || !picture) {
+    if (!email || !password || !firstName || !lastName || !phoneNumber || !picture) {
       if (req.file.path) {
         try {
           fs.unlinkSync(req.file.path);
@@ -74,7 +74,7 @@ export const register = async (req, res, next) => {
       password: hashPassword,
       firstName: firstName,
       lastName: lastName,
-      age: age,
+      phoneNumber: phoneNumber,
       picture: picture,
     });
 
@@ -116,7 +116,7 @@ export const login = async (req, res, next) => {
         email: user.email,
         first_name: user.firstName,
         last_name: user.lastName,
-        age: user.age,
+        phoneNumber: user.phoneNumber,
         picture: user.picture,
         token: generateToken(user._id),
       });
@@ -162,7 +162,7 @@ export const updateUser = async (req, res) => {
     }
     if (req.body.firstName) updatedFields.firstName = req.body.firstName;
     if (req.body.lastName) updatedFields.lastName = req.body.lastName;
-    if (req.body.age) updatedFields.age = req.body.age;
+    if (req.body.phoneNumber) updatedFields.phoneNumber = req.body.phoneNumber;
 
     if (req.file) {
       updatedFields.picture = req.file.path;

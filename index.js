@@ -6,6 +6,7 @@ import LabelRoute from "./routes/labelRoute.js";
 import JournalRoute from "./routes/journalRoute.js";
 import TaskRoute from "./routes/taskRoute.js";
 import GoalRoute from "./routes/goalRoute.js";
+
 //import and use .env variables
 import dotenv from "dotenv";
 dotenv.config();
@@ -17,6 +18,10 @@ await connectDB();
 const PORT = process.env.PORT || 5000;
 
 const app = new express();
+
+// fix cors 
+import cors from "cors"
+app.use(cors());
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));

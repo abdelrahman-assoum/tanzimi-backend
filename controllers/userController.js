@@ -35,16 +35,16 @@ export const getUserById = async (req, res, next) => {
 export const register = async (req, res, next) => {
   try {
     let { email, password, firstName, lastName, phoneNumber } = req.body;
-    let picture = req.file.path;
+    // let picture = req.file.path;
     // Fields Validation
-    if (!email || !password || !firstName || !lastName || !phoneNumber || !picture) {
-      if (req.file.path) {
-        try {
-          fs.unlinkSync(req.file.path);
-        } catch (err) {
-          console.error("Error deleting file:", err);
-        }
-      }
+    if (!email || !password || !firstName || !lastName || !phoneNumber ) {
+      // if (req.file.path) {
+      //   try {
+      //     fs.unlinkSync(req.file.path);
+      //   } catch (err) {
+      //     console.error("Error deleting file:", err);
+      //   }
+      // }
       return res.status(400).json({
         error: "All fields are required",
       });
@@ -54,13 +54,13 @@ export const register = async (req, res, next) => {
     const checkUser = await User.findOne({ email: email });
 
     if (checkUser) {
-      if (req.file.path) {
-        try {
-          fs.unlinkSync(req.file.path);
-        } catch (err) {
-          console.error("Error deleting file:", err);
-        }
-      }
+      // if (req.file.path) {
+      //   try {
+      //     fs.unlinkSync(req.file.path);
+      //   } catch (err) {
+      //     console.error("Error deleting file:", err);
+      //   }
+      // }
       return res.status(400).json({ error: "User already registered" });
     }
     // Hashing the password
@@ -75,7 +75,7 @@ export const register = async (req, res, next) => {
       firstName: firstName,
       lastName: lastName,
       phoneNumber: phoneNumber,
-      picture: picture,
+      // picture: picture,
     });
 
     // Save User
@@ -88,10 +88,11 @@ export const register = async (req, res, next) => {
       return res.status(400).json({ message: "Invalid User data" });
     }
   } catch (error) {
-    if (req.file) {
-      fs.unlinkSync(req.file.path);
-    }
-    res.json({ error: error });
+    // if (req.file) {
+    //   fs.unlinkSync(req.file.path);
+    // }
+    // console.log("hi");
+    res.json({ error: error.message });
   }
 };
 // Login an User
@@ -122,7 +123,7 @@ export const login = async (req, res, next) => {
       });
       // if user not found
     } else {
-      return res.status(400).json({ error: "User not found" });
+      return res.status(400).json({ error: "Invalid Credentials" });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });

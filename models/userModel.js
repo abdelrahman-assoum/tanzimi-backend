@@ -20,17 +20,16 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: true,
+      minlength: [8, "Password should be at least 8 characters"],
     },
     phoneNumber: {
       type: Number,
       required: true,
-      minLength: 8,
-      maxLength: 15,
+      min: [10000000, "Phone number should be at least 8 digits"],
+      max: [999999999999999, "Phone number should be at most 15 digits"],
     },
 
-    picture: {
-      type: String,
-    },
+    picture: String,
   },
   {
     collection: "users",

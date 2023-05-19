@@ -13,7 +13,7 @@ import {
 
 router.get("/", checkAuth, getAllUsers);
 router.post("/login", login);
-router.post("/register", ImageUpload.single("picture"), register);
+router.post("/register", register);
 router.get("/:id", checkAuth, getUserById);
 router.delete("/:id", checkAuth, deleteUser);
 router.put("/:id", checkAuth, ImageUpload.single("picture"), updateUser);

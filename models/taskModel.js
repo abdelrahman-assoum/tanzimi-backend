@@ -9,7 +9,6 @@ const taskSchema = new Schema(
       type: String,
       required: true,
     },
-    description: String,
     duration: {
       type: Number,
       required: true,

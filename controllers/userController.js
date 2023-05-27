@@ -81,9 +81,13 @@ export const register = async (req, res, next) => {
     // Save User
     if (user) {
       await user.save();
+      // Generate token
+      const token = generateToken(user._id);
+
+
       res
         .status(201)
-        .json({ message: "User successfully registered", user: user });
+        .json({ message: "User successfully registered", user, token });
     } else {
       return res.status(400).json({ message: "Invalid User data" });
     }

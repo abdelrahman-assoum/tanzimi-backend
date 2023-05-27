@@ -33,8 +33,8 @@ export const getGoalById = async (req, res) => {
 
 export const getUserGoals = async (req, res) => {
 try {
-    let user = req.body.user;
-    const userGoals = await Goal.find({ user });
+    let user = req.params.id;
+    const userGoals = await Goal.find({ user: user });
 
     if (userGoals.length > 0) {
       res.status(200).json({

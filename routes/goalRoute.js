@@ -3,11 +3,11 @@ import { checkAuth } from "../middleware/auth.js";
 import { createGoal, deleteGoal, getGoalById, getGoals, getUserGoals, updateGoal } from "../controllers/goalController.js";
 const router = Router();
 
-router.get("/", getGoals);
-router.get("/user", getUserGoals);
-router.post("/new", createGoal);
-router.put("/edit/:id", updateGoal);
-router.delete("/delete/:id", deleteGoal);
-router.get("/:id", getGoalById);
+router.get("/", checkAuth, getGoals);
+router.post("/new",checkAuth, createGoal);
+router.get("/user/:id",checkAuth, getUserGoals);
+router.put("/edit/:id",checkAuth, updateGoal);
+router.delete("/delete/:id",checkAuth, deleteGoal);
+router.get("/:id",checkAuth, getGoalById);
     
 export default router;

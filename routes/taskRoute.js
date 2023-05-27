@@ -10,11 +10,11 @@ import {
   updateTask,
 } from "../controllers/taskController.js";
 
-router.get("/", getTasks);
-router.get("/user", getUserTasks);
-router.post("/new", createTask);
-router.put("/edit/:id", updateTask);
-router.delete("/delete/:id", deleteTask);
-router.get("/:id", getTaskById);
+// router.get("/", getTasks);
+router.post("/new", checkAuth, createTask);
+router.get("/user/:id", checkAuth, getUserTasks);
+router.put("/edit/:id", checkAuth, updateTask);
+router.delete("/delete/:id", checkAuth, deleteTask);
+router.get("/:id", checkAuth, getTaskById);
 
 export default router;

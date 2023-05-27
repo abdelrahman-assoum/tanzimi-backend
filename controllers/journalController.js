@@ -16,8 +16,8 @@ export const getJournals = async (req, res) => {
   }
 };
 export const getUserJournals = async (req, res) => {
-  let user = req.body.user;
-  const userJournals = await Journal.find({ user });
+  let user = req.params.id;
+  const userJournals = await Journal.find({ user: user });
 
   if (userJournals.length > 0) {
     res.status(200).json({

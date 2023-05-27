@@ -13,6 +13,6 @@ router.get("/", checkAuth, getLabels);
 router.post("/new", checkAuth, createLabel);
 router.put("/edit/:id", checkAuth, updateLabel);
 router.delete("/delete/:id", checkAuth, deleteLabel);
-router.get("/user", checkAuth, getUserLabel);
+router.get("/user/:id", checkAuth, getUserLabel);
 
 export default router;

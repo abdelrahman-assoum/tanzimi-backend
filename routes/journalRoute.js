@@ -5,8 +5,8 @@ import { checkAuth } from "../middleware/auth.js";
 const router = Router();
 
 router.get('/', checkAuth, getJournals);
-router.get("/user", getUserJournals);
 router.post("/new", checkAuth, JournalsUpload.single("picture"), createJournal);
+router.get("/user/:id",checkAuth, getUserJournals);
 router.put('/edit/:id', checkAuth, JournalsUpload.single('picture'), updateJournal)
 router.delete('/delete/:id', checkAuth, deleteJournal)
 

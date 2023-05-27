@@ -18,8 +18,8 @@ export const getLabels = async (req, res, next) => {
   }
 };
 export const getUserLabel = async (req, res) => {
-  let user = req.body.user;
-  const userLabel = await Label.find({ user });
+  let user = req.params.id;
+  const userLabel = await Label.find({ user: user });
 
   if (userLabel.length > 0) {
     res.status(200).json({

@@ -153,7 +153,7 @@ export const deleteUser = async (req, res) => {
 };
 
 const generateToken = (id) => {
-  return jwt.sign({ _id: id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+  return jwt.sign({ _id: id }, process.env.JWT_SECRET, { expiresIn: "24h" });
 };
 
 export const updateUser = async (req, res) => {

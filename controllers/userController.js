@@ -37,7 +37,7 @@ export const register = async (req, res, next) => {
     let { email, password, firstName, lastName, phoneNumber } = req.body;
     // let picture = req.file.path;
     // Fields Validation
-    if (!email || !password || !firstName || !lastName || !phoneNumber ) {
+    if (!email || !password || !firstName || !lastName || !phoneNumber) {
       // if (req.file.path) {
       //   try {
       //     fs.unlinkSync(req.file.path);
@@ -84,7 +84,6 @@ export const register = async (req, res, next) => {
       // Generate token
       const token = generateToken(user._id);
 
-
       res
         .status(201)
         .json({ message: "User successfully registered", user, token });
@@ -116,14 +115,12 @@ export const login = async (req, res, next) => {
 
     const user = await User.findOne({ email });
     if (user && (await bcrypt.compare(password, user.password))) {
-      res.json({
-        _id: user._id,
-        email: user.email,
-        first_name: user.firstName,
-        last_name: user.lastName,
-        phoneNumber: user.phoneNumber,
-        picture: user.picture,
-        token: generateToken(user._id),
+      const { password, ...otherDetails } = user._doc;
+      const token = generateToken(user._id);
+      const userData = {...otherDetails}
+       res.json({
+        user: userData,
+        token: token,
       });
       // if user not found
     } else {

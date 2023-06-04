@@ -8,12 +8,8 @@ const goalSchema = new Schema({
     type: String,
     required: true,
   },
-  dueDate:   {
+  dueDate: {
     type: Date,
-    required: true,
-  },
-  description: {
-    type: String,
     required: true,
   },
   tasks: [
@@ -30,7 +26,11 @@ const goalSchema = new Schema({
 
 goalSchema.pre(["find", "findOne", "save", "findOneAndUpdate"], function () {
   this.populate({ path: "user", model: User, select: "-email -password" }); // Exclude the email and password fields
-  this.populate({ path: "tasks", model: Task, select: "-description" }); // Exclude the description field
+  this.populate({
+    path: "tasks",
+    model: Task,
+    select: "-description -labels -priority -duration -dueDate",
+  });
 });
 const Goal = mongoose.model("Goal", goalSchema);
 

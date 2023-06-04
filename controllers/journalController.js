@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import Journal from "../models/journalModel.js";
-import fs from 'fs';
+// import fs from 'fs';
 
 export const getJournals = async (req, res) => {
   try {
@@ -31,26 +31,27 @@ export const getUserJournals = async (req, res) => {
 
 export const createJournal = async (req, res) => {
   try {
-    let { title, content, user } = req.body;
-    if (req.file) {
-      let picture = req.file.path;
+    let {content, color, user } = req.body;
+    // if (req.file) {
+    //   let picture = req.file.path;
       const journal = new Journal({
-        title,
+        // title,
         content,
-        picture,
+        // picture,
+        color,
         user,
       });
       await journal.save();
       res.status(201).json(journal);
-    } else {
-      const journal = new Journal({
-        title,
-        content,
-        user,
-      });
-      await journal.save();
-      res.status(201).json(journal);
-    }
+    // } else {
+    //   const journal = new Journal({
+    //     title,
+    //     content,
+    //     user,
+    //   });
+    //   await journal.save();
+    //   res.status(201).json(journal);
+    // }
   } catch (error) {
     if (error) {
       return res.status(500).json({ error: error.message });
@@ -62,19 +63,20 @@ export const updateJournal = async (req, res) => {
   try {
     const id = req.params.id;
     const updatedFields = {};
-    if (req.body.title) updatedFields.title = req.body.title;
+    // if (req.body.title) updatedFields.title = req.body.title;
     if (req.body.content) updatedFields.content = req.body.content;
+    if (req.body.color) updatedFields.content = req.body.color;
     if (req.body.user) updatedFields.user = req.body.user;
 
-    if (req.file) {
-      updatedFields.picture = req.file.path;
+    // if (req.file) {
+    //   updatedFields.picture = req.file.path;
 
-      // Delete the old picture
-      const journal = await Journal.findById(id);
-      if (journal.picture) {
-        fs.unlinkSync(journal.picture);
-      }
-    }
+    //   // Delete the old picture
+    //   const journal = await Journal.findById(id);
+    //   if (journal.picture) {
+    //     fs.unlinkSync(journal.picture);
+    //   }
+    // }
     const editJournal = { ...req.body, ...updatedFields };
     console.log(editJournal);
     const editedJournal = await Journal.findByIdAndUpdate(
@@ -98,9 +100,9 @@ export const deleteJournal = async (req, res) => {
     if(!journal) {
         return res.status(404).json({ error: "Journal not found" });
     }
-    if (journal.picture) {
-      fs.unlinkSync(journal.picture);
-    }
+    // if (journal.picture) {
+    //   fs.unlinkSync(journal.picture);
+    // }
     await Journal.findByIdAndDelete(id);
     res.status(200).json({ message: "Journal deleted successfully" });
   } catch (error) {

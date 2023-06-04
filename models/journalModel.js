@@ -4,18 +4,19 @@ const { Schema } = mongoose;
 
 const journalSchema = new Schema(
   {
-    title: {
-      type: String,
-      required: true,
-    },
     content:{
       type: String,
       required: true,
     },
-    picture: String,
+    // picture: String,
+    color:{
+      type: String,
+      required: true,
+    },
     user: {
       type: Schema.Types.ObjectId,
       ref: "User",
+      required: true,
     },
   },
   {

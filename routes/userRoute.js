@@ -1,7 +1,7 @@
 import { Router } from "express";
 const router = Router();
 import { checkAuth } from "../middleware/auth.js";
-import { ImageUpload } from "../middleware/upload.js";
+// import { ImageUpload } from "../middleware/upload.js";
 import {
   register,
   login,
@@ -16,6 +16,6 @@ router.post("/login", login);
 router.post("/register", register);
 router.get("/:id", checkAuth, getUserById);
 router.delete("/:id", checkAuth, deleteUser);
-router.put("/:id", checkAuth, ImageUpload.single("picture"), updateUser);
+router.put("/:id", checkAuth, updateUser);
 
 export default router;

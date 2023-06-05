@@ -24,6 +24,10 @@ export const getUserJournals = async (req, res) => {
       message: `${userJournals[0].user.firstName} ${userJournals[0].user.lastName} Journals`,
       userJournals,
     });
+  } else if (userJournals.length === 0) {
+    return res
+      .status(200)
+      .json({ message: "No Journals Found", userJournals: [] });
   } else {
     return res.status(404).json({ error: "No Journals found" });
   }

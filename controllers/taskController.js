@@ -28,17 +28,21 @@ export const getTaskById = async (req, res) => {
 };
 export const getUserTasks = async (req, res) => {
   let user = req.params.id;
+  const checkUser = await User.findById(user);
+  if (!checkUser) return res.status(404).json({message: "User not found"});
   const userTasks = await Task.find({ user: user });
   if (userTasks.length > 0) {
     res.status(200).json({
       message: `${userTasks[0].user.firstName} ${userTasks[0].user.lastName} Tasks`,
       userTasks,
     });
+  }
+  else if (userTasks.length === 0) {
+    return res.status(200).json({message: "No Tasks Found", userTasks: []})
   } else {
     return res.status(404).json({ error: "No Tasks found" });
   }
-};
-
+}
 export const createTask = async (req, res) => {
   try {
     let {

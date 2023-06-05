@@ -41,6 +41,10 @@ try {
         message: `${userGoals[0].user.firstName} ${userGoals[0].user.lastName} Goals`,
         userGoals,
       });
+    } else if (userGoals.length === 0) {
+      return res
+        .status(200)
+        .json({ message: "No Goals Found", userGoals: [] });
     } else {
       return res.status(404).json({ error: "No Goals found" });
     }

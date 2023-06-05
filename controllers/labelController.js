@@ -26,6 +26,10 @@ export const getUserLabel = async (req, res) => {
       message: `${userLabel[0].user.firstName} ${userLabel[0].user.lastName} Labels`,
       userLabel,
     });
+  } else if (userLabel.length === 0) {
+    return res
+      .status(200)
+      .json({ message: "No `Label` Found", userLabel: [] });
   } else {
     return res.status(404).json({ error: "No Label found" });
   }
